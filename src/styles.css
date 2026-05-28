@@ -1,0 +1,193 @@
+:root{
+  --emerald: #0b4d3a;
+  --midnight: #071233;
+  --gold: #d4af37;
+  --ivory: #faf7f2;
+  --glass: rgba(255,255,255,0.06);
+}
+html,body,#root{height:100%;}
+body{margin:0;font-family: 'Playfair Display', serif;background: radial-gradient(ellipse at 10% 10%, rgba(10,20,40,0.85), transparent 20%), linear-gradient(180deg,var(--midnight),#021025);color:var(--ivory);overflow:hidden}
+.app{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding:40px}
+.bg-pattern{position:fixed;inset:0;background-image:radial-gradient(circle at 10% 10%, rgba(212,175,55,0.03), transparent 20%), linear-gradient(120deg, rgba(3,8,22,0.6), rgba(2,6,20,0.9));pointer-events:none}
+
+/* geometric pattern overlay */
+.bg-pattern:before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 40px), radial-gradient(circle at 20% 30%, rgba(212,175,55,0.02), transparent 4%), radial-gradient(circle at 80% 70%, rgba(212,175,55,0.02), transparent 6%);mix-blend-mode:overlay;opacity:0.9}
+
+/* moon */
+.moon-wrap{position:fixed;right:8%;top:6%;transform:translateZ(0);pointer-events:none}
+.moon{width:140px;height:140px;border-radius:50%;background:conic-gradient(from 210deg, rgba(212,175,55,0.18), rgba(255,255,255,0.02) 40%);box-shadow:0 0 40px 8px rgba(212,175,55,0.06), inset -18px -6px 40px rgba(0,0,0,0.5);position:relative}
+.moon:after{content:'';position:absolute;right:18px;top:8px;width:84px;height:84px;background:var(--midnight);border-radius:50%;}
+.moon-reflection{position:fixed;right:8%;top:24%;width:220px;height:30px;transform:translateY(-10px);background:linear-gradient(90deg, rgba(212,175,55,0.04), rgba(255,255,255,0.02));filter:blur(14px);opacity:0.7}
+
+/* stars */
+.stars i{position:absolute;width:2px;height:2px;background:linear-gradient(90deg,var(--ivory),#ffd);box-shadow:0 0 6px rgba(255,255,210,0.6);opacity:0;animation:star 3s linear infinite}
+@keyframes star{0%{opacity:0;transform:scale(.2)}50%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(.2)}}
+
+/* lanterns */
+.lanterns{position:fixed;left:4%;top:6%;width:220px;height:70vh;pointer-events:none}
+.lantern{width:26px;height:46px;background:linear-gradient(180deg,#f6e8c8,#f4d88a);border-radius:6px;box-shadow:0 8px 20px rgba(2,6,20,0.5);position:absolute;opacity:0.9;transform-origin:center;}
+.lantern:before{content:'';position:absolute;left:50%;top:-18px;width:6px;height:18px;background:linear-gradient(#d4af37,#c08f1b);transform:translateX(-50%);border-radius:3px}
+.lantern:after{content:'';position:absolute;left:4px;right:4px;bottom:6px;height:8px;background:rgba(0,0,0,0.06);border-radius:4px}
+.lantern.l1{left:10px;top:40px;animation:float 8s ease-in-out -2s infinite}
+.lantern.l2{left:40px;top:140px;animation:float 9s ease-in-out -4s infinite}
+.lantern.l3{left:80px;top:220px;animation:float 10s ease-in-out -6s infinite}
+.lantern.l4{left:120px;top:80px;animation:float 11s ease-in-out -1s infinite}
+.lantern.l5{left:160px;top:200px;animation:float 12s ease-in-out -3s infinite}
+.lantern.l6{left:190px;top:320px;animation:float 13s ease-in-out -5s infinite}
+@keyframes float{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-24px) rotate(3deg)}100%{transform:translateY(0) rotate(0)}}
+
+/* Card */
+.card-wrap{width:100%;max-width:860px;padding:28px;display:flex;align-items:center;justify-content:center}
+.card{width:100%;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));border-radius:18px;padding:48px;backdrop-filter:blur(10px) saturate(120%);box-shadow:0 8px 40px rgba(2,6,20,0.6), 0 2px 8px rgba(0,0,0,0.4);border:1px solid rgba(212,175,55,0.08);position:relative;transition:transform .6s cubic-bezier(.2,.9,.2,1), box-shadow .3s;cursor:pointer}
+.card{animation:cardIn .9s cubic-bezier(.16,.84,.24,1)}
+
+@keyframes cardIn{0%{opacity:0;transform:translateY(18px) scale(.98)}60%{opacity:1}100%{opacity:1;transform:none}}
+
+.card-wrap.open .card{box-shadow:0 30px 120px rgba(2,6,20,0.8);border-image:conic-gradient(from 120deg, rgba(212,175,55,0.22), rgba(212,175,55,0.04)) 1;}
+.card:hover{box-shadow:0 20px 80px rgba(2,6,20,0.7);transform:translateY(-8px) scale(1.01)}
+.card-ornament{position:absolute;inset:0;border-radius:inherit;padding:1px;background:conic-gradient(from 160deg, rgba(212,175,55,0.06), transparent 10%);mask:linear-gradient(#000,transparent 70%);pointer-events:none}
+.card-border-anim{position:absolute;inset:-2px;border-radius:20px;pointer-events:none;background:linear-gradient(90deg, rgba(212,175,55,0.18), rgba(255,255,255,0.02));filter:blur(10px);opacity:0;transition:opacity .45s, transform .6s}
+.card:hover .card-border-anim{opacity:1;transform:scale(1.02)}
+
+/* modal */
+.modal-backdrop{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,20,0.6);z-index:100}
+.modal{width:min(520px,94%);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:22px;backdrop-filter:blur(8px);box-shadow:0 10px 40px rgba(2,6,20,0.6);border:1px solid rgba(212,175,55,0.06);}
+.modal h3{margin:0 0 8px 0;font-family:Montserrat, sans-serif}
+.modal p{margin:0 0 18px 0;color:rgba(250,247,242,0.85)}
+.modal-actions{display:flex;gap:12px;justify-content:flex-end}
+
+/* geometric pattern styles */
+.geom-pattern{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;opacity:0.7;mix-blend-mode:overlay}
+.geom-pattern .tiles{animation:tileShift 30s linear infinite;opacity:0.5}
+.geom-pattern .geom-orbit{animation:orbit 24s linear infinite}
+@keyframes tileShift{0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)}}
+@keyframes orbit{0%{transform:translate(600px,120px) rotate(0)}100%{transform:translate(600px,120px) rotate(360deg)}}
+
+.calligraphy{display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:18px}
+.calligraphy .arabic{font-family: 'Scheherazade New', serif;font-size:54px;color:var(--gold);text-shadow:0 6px 36px rgba(212,175,55,0.18)}
+.calligraphy .subtitle{font-size:20px;color:rgba(250,247,242,0.96);letter-spacing:1.8px;text-shadow:0 1px 6px rgba(0,0,0,0.16)}
+
+.blessing{font-size:18px;line-height:1.75;color:rgba(250,247,242,0.96);max-width:72ch;text-align:center;margin:10px auto 18px;min-height:72px;word-break:break-word;text-shadow:0 1px 4px rgba(0,0,0,0.16)}
+.blessing .cursor{display:inline-block;width:2px;height:1.2em;background:var(--ivory);margin-left:6px;animation:blink 1s steps(2,start) infinite}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+
+.card-actions{display:flex;justify-content:center}
+.btn{padding:12px 20px;border-radius:999px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.06);color:var(--ivory);font-weight:600;cursor:pointer;position:relative;overflow:hidden;backdrop-filter:blur(8px);transition:background .24s ease,border-color .24s ease,color .24s ease}
+.btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.24)}
+.btn.primary{background:linear-gradient(90deg,var(--gold), #f2c96b);color:var(--midnight);box-shadow:0 8px 30px rgba(212,175,55,0.12);border:none}
+.btn.primary:hover{filter:brightness(1.02)}
+.btn .ripple{position:absolute;width:18px;height:18px;background:rgba(255,255,255,0.4);border-radius:50%;transform:translate(-50%,-50%) scale(0);animation:ripple .6s ease-out}
+@keyframes ripple{to{transform:translate(-50%,-50%) scale(14);opacity:0}}
+
+/* small icon buttons */
+.controls{position:fixed;left:22px;top:18px;display:flex;gap:12px;z-index:40}
+.icon-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:10px;color:var(--ivory);cursor:pointer}
+
+.fireworks{position:fixed;inset:0;pointer-events:none;z-index:50}
+
+/* PREMIUM MOBILE REFINEMENT */
+@media (max-width: 768px){
+
+  .app{
+    padding:20px 14px;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .card-wrap{
+    width:100%;
+    padding:0;
+  }
+
+  .card{
+    padding:28px 22px;
+    border-radius:28px;
+    min-height:auto;
+    overflow:hidden;
+    backdrop-filter:blur(14px) saturate(140%);
+  }
+
+  .calligraphy{
+    margin-bottom:18px;
+  }
+
+  .calligraphy .arabic{
+    font-size:38px;
+    line-height:1.4;
+  }
+
+  .calligraphy .subtitle{
+    font-size:15px;
+    letter-spacing:1.2px;
+  }
+
+  .blessing{
+    font-size:15px;
+    line-height:1.9;
+    margin:16px auto 24px;
+    min-height:auto;
+    width:100%;
+  }
+
+  .btn{
+    width:100%;
+    padding:15px 18px;
+    font-size:15px;
+  }
+
+  .card-actions{
+    width:100%;
+  }
+
+  .signature-card{
+    width:100%;
+    max-width:100%;
+    padding:14px 16px;
+    border-radius:18px;
+  }
+
+  .moon-wrap{
+    top:3%;
+    right:3%;
+    transform:scale(.82);
+    opacity:.95;
+  }
+
+  .moon{
+    width:90px;
+    height:90px;
+  }
+
+  .moon-reflection{
+    width:140px;
+    top:18%;
+    opacity:.45;
+  }
+
+  .controls{
+    top:14px;
+    right:14px;
+    left:auto;
+    gap:8px;
+  }
+
+  .icon-btn{
+    padding:9px;
+    backdrop-filter:blur(10px);
+    background:rgba(255,255,255,0.04);
+  }
+
+  .geom-pattern{
+    opacity:.5;
+  }
+
+  .lanterns{
+    opacity:.55;
+    transform:scale(.7);
+    left:-40px;
+  }
+
+  .card:hover{
+    transform:none;
+  }
+}
